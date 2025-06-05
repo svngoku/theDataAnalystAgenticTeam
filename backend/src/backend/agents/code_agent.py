@@ -2,7 +2,12 @@
 
 from smolagents import CodeAgent, LiteLLMModel, PythonInterpreterTool
 from backend.tools.python_tools import AUTHORIZED_IMPORTS
-from tools import google_search, serper_scrape, python_file, streamlit_runner
+from backend.tools import (
+    google_search,
+    serper_scrape,
+    python_file,
+    streamlit_runner,
+)
 
 MODEL_ID: str = "anthropic/claude-3-5-sonnet-latest"
 

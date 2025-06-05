@@ -1,7 +1,10 @@
 """`backend.tools.jina_rerank` module."""
 
 import os
+from typing import Any, Dict
+
 import requests
+from requests import RequestException
 from smolagents import Tool
 
 class JinaRerank(Tool):
@@ -27,16 +30,25 @@ class JinaRerank(Tool):
             'Authorization': f'Bearer {os.environ["JINA_API_KEY"]}'
         }
 
-    def forward(self, query: str, documents: list) -> str:
+    def forward(self, query: str, documents: list) -> Dict[str, Any]:
         """Executes the Jina AI reranking."""
         payload = {
             "model": "jina-reranker-v2-base-multilingual",
             "query": query,
             "top_n": 3,
-            "documents": documents
+            "documents": documents,
         }
 
-        response = requests.post(self.url, headers=self.headers, json=payload)
-        return response.json()
+        try:
+            response = requests.post(
+                self.url,
+                headers=self.headers,
+                json=payload,
+                timeout=10,
+            )
+            response.raise_for_status()
+            return response.json()
+        except RequestException as exc:
+            return {"error": str(exc)}
     
 jina_rerank = JinaRerank()

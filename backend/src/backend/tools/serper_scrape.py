@@ -2,9 +2,10 @@
 
 import os
 import json
-from typing import Dict, Any
+from typing import Any, Dict
 
 import requests
+from requests import RequestException
 from smolagents import Tool
 
 
@@ -31,10 +32,20 @@ class SerperScrape(Tool):
         """Executes the Serper.dev website scrape."""
         payload = json.dumps({
             "url": url,
-            "includeMarkdown": True
+            "includeMarkdown": True,
         })
 
-        response = requests.request("POST", self.url, headers=self.headers, data=payload)
-        return response.text
+        try:
+            response = requests.request(
+                "POST",
+                self.url,
+                headers=self.headers,
+                data=payload,
+                timeout=10,
+            )
+            response.raise_for_status()
+            return response.text
+        except RequestException as exc:
+            return str(exc)
     
 serper_scrape = SerperScrape()
