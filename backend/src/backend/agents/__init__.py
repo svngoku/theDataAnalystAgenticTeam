@@ -1,4 +1,2 @@
-"""`backend.agents` subpackage
+"""backend.agents subpackage\n\nContains our agents definitions."""
 
-Contains our agents definitions.
-"""
