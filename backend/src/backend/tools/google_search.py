@@ -22,7 +22,7 @@ class GoogleSearch(Tool):
         super().__init__()
         self.url = "https://google.serper.dev/search"
         self.headers = {
-            'X-API-KEY': os.environ["SERPER_API"],
+            'X-API-KEY': os.environ["SERPER_API_KEY"],
             'Content-Type': 'application/json'
         }
 

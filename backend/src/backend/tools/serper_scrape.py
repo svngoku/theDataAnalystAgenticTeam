@@ -23,7 +23,7 @@ class SerperScrape(Tool):
         super().__init__()
         self.url = "https://scrape.serper.dev"
         self.headers = {
-            'X-API-KEY': os.environ["SERPER_API"],
+            'X-API-KEY': os.environ["SERPER_API_KEY"],
             'Content-Type': 'application/json'
         }
 
